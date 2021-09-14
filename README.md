@@ -305,6 +305,50 @@ container:
 Since the plaintext port is also available, you can test both and find out
 which is faster and by how much. ;)
 
+##### Make possible to launch the image with the same certificates
+
+In order to launch the image several times without the need to generate the certificates each tiime
+we need to launch it with a volume
+
+    docker run --rm --net=host -v /tmp/certs:/tmp/certs  -e ENABLE_SSL=1 -e RUNTESTS=0  lensesio/fast-data-dev
+
+In /tmp/certs volume we will found:
+
+    ls -al /tmp/certs
+    clientA.crt.pem
+    clientA.jks
+    clientA.key.pem
+    clientA.p12
+    clientB.crt.pem
+    clientB.jks
+    clientB.key.pem
+    clientB.p12
+    client.crt.pem
+    client.jks
+    client.key.pem
+    client.p12
+    kafka.crt.pem
+    kafka.jks
+    kafka.key.pem
+    kafka.p12
+    lfddca.crt.pem
+    lfddca.key.pem
+    truststore.jks
+
+
+Also in the image we will found in /var/www/certs:
+
+    client.crt.pem
+    client.jks
+    client.key.pem
+    clientA.jks
+    clientB.jks
+    lfddca.crt.pem
+    truststore.jks
+
+All these files can be get using the command:
+
+    wget localhost:3030/certs/<name of the file>
 
 ### Advanced Connector settings
 
