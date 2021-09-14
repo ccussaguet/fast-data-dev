@@ -380,12 +380,15 @@ if [[ $ENABLE_SSL =~ $TRUE_REG ]]; then
     echo -e "\e[92mTLS enabled.\e[34m"
     if [[ -f /tmp/certs/kafka.jks ]] \
            && [[ -f /tmp/certs/client.jks ]] \
+           && [[ -f /tmp/certs/lfddca.crt.pem ]] \
+           && [[ -f /tmp/certs/client.crt.pem ]] \
+           && [[ -f /tmp/certs/client.key.pem ]] \
            && [[ -f /tmp/certs/truststore.jks ]]; then
         echo -e "\e[92mOld keystores and truststore found, skipping creation of new ones.\e[34m"
         {
             pushd /tmp/certs
             mkdir -p /var/www/certs/
-            cp client.jks truststore.jks /var/www/certs/
+            cp lfddca.crt.pem client.crt.pem client.key.pem  client.jks clientA.jks clientB.jks truststore.jks /var/www/certs/
             popd
         } >>/var/log/ssl-setup.log 2>&1
     else
@@ -431,11 +434,12 @@ if [[ $ENABLE_SSL =~ $TRUE_REG ]]; then
                     -storepass fastdata
 
             mkdir -p /var/www/certs/
-            cp client.jks clientA.jks clientB.jks truststore.jks /var/www/certs/
+            cp lfddca.crt.pem client.crt.pem client.key.pem  client.jks clientA.jks clientB.jks truststore.jks /var/www/certs/
 
             popd
         } >/var/log/ssl-setup.log 2>&1
     fi
+    chmod a+rw /var/www/certs/*
     # Setup the broker with SSL
     cat <<EOF >>/var/run/broker/server.properties
 ssl.client.auth=required
