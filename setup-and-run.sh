@@ -400,6 +400,9 @@ if [[ $ENABLE_SSL =~ $TRUE_REG ]]; then
             quickcert -ca -out lfddca. -CN "Landoop's Fast Data Dev Self Signed Certificate Authority"
             SSL_HOSTS="127.0.0.1,127.0.0.1,192.168.99.100,kafka"
             HOSTNAME=${HOSTNAME:-} # This come from the container, so let's not permit it be unbound
+
+            echo -e "\e hostname: $HOSTNAME\e[34m"
+
             if [[ ! -z $HOSTNAME ]]; then SSL_HOSTS="$SSL_HOSTS,$HOSTNAME"; fi
             if [[ ! -z $ADV_HOST ]]; then SSL_HOSTS="$SSL_HOSTS,$ADV_HOST"; fi
             if [[ ! -z $SSL_EXTRA_HOSTS ]]; then SSL_HOSTS="$SSL_HOSTS,$SSL_EXTRA_HOSTS"; fi
