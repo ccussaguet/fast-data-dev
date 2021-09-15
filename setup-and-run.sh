@@ -404,8 +404,8 @@ if [[ $ENABLE_SSL =~ $TRUE_REG ]]; then
             echo -e "\e hostname: $HOSTNAME\e[34m"
 
             if [[ ! -z $HOSTNAME ]]; then SSL_HOSTS="$SSL_HOSTS,$HOSTNAME"; fi
-            if [[ ! -z $ADV_HOST ]]; then SSL_HOSTS="$SSL_HOSTS,$ADV_HOST"; fi
-            if [[ ! -z $SSL_EXTRA_HOSTS ]]; then SSL_HOSTS="$SSL_HOSTS,$SSL_EXTRA_HOSTS"; fi
+            if [[ ! -z $ADV_HOST ]]; then SSL_HOSTS="$SSL_HOSTS,$ADV_HOST,$HOSTNAME"; fi
+            if [[ ! -z $SSL_EXTRA_HOSTS ]]; then SSL_HOSTS="$SSL_HOSTS,$SSL_EXTRA_HOSTS,$HOSTNAME"; fi
 
             # Create Key-Certificate pairs for Kafka and user
             for cert in kafka client clientA clientB; do
